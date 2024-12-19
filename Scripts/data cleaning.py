@@ -15,11 +15,7 @@ def clean_data(df):
         # If the conversion fails, print a message and skip renaming
         print(f"Column {col} is not in the expected date format and will not be renamed.")
         
-=======
-    for col in df.columns[3:]:
-        df.rename(columns={col: pd.to_datetime(col, format='%Y%m').strftime('%Y-%m')}, inplace=True)
-    
->>>>>>> 69d5947d4d745bba6f7bca3d4b96231a2a9e0182
+
   
     df = df.dropna()  # Drop rows with missing values
     
