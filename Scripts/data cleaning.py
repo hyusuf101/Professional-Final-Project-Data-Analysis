@@ -5,6 +5,7 @@ def clean_data(df):
     df.rename(columns={df.columns[0]: 'Crime Category', df.columns[1]: 'Subcategory'}, inplace=True)
     
     # Format the rest of the columns to be dates
+<<<<<<< HEAD
    for col in crime.columns[3:]:
     try:
         # Try converting the column name to a datetime format to see if it's a valid date
@@ -14,6 +15,11 @@ def clean_data(df):
         # If the conversion fails, print a message and skip renaming
         print(f"Column {col} is not in the expected date format and will not be renamed.")
         
+=======
+    for col in df.columns[3:]:
+        df.rename(columns={col: pd.to_datetime(col, format='%Y%m').strftime('%Y-%m')}, inplace=True)
+    
+>>>>>>> 69d5947d4d745bba6f7bca3d4b96231a2a9e0182
   
     df = df.dropna()  # Drop rows with missing values
     
