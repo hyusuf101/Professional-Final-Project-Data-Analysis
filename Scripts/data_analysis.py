@@ -105,4 +105,26 @@ ax3.set_title('Population Density by Borough', pad=20)
 print("Top 5 Boroughs by Population Density:")
 print(population_density.nlargest(5, 'Density')[['Borough', 'Density']])
 
+# Filter the dataset for theft-related crimes and aggregate by borough
+theft_data = crime[crime['Crime Category'] == 'THEFT'].groupby('Borough')[crime.columns[-1]].sum().reset_index()
+theft_data.columns = ['Borough', 'TheftCount']
 
+# Create figure for Theft Occurrences
+fig, ax4 = plt.subplots(1, 1, figsize=(5, 5))
+
+# Plot 2: Theft Occurrences
+london_theft = gdf.merge(theft_data, on='Borough', how='left')
+theft_plot = london_theft.plot(column='TheftCount', 
+                               ax=ax4,
+                               legend=True,
+                               legend_kwds={'label': 'Number of Theft Incidents'},
+                               cmap='YlOrRd',
+                               missing_kwds={'color': 'lightgrey'})
+# ctx.add_basemap(ax4, source=ctx.providers.CartoDB.Positron, crs=gdf.crs.to_string(), alpha=0.5, verify=False)
+ax4.set_axis_off()
+ax4.set_title('Theft Occurrences by Borough', pad=20)
+
+
+# Print statistics
+print("Top 5 Boroughs by Theft Occurrences:")
+print(theft_data.nlargest(5, 'TheftCount')[['Borough', 'TheftCount']])
