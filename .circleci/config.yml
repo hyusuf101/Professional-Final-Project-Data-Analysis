@@ -8,15 +8,15 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: pip install -r requirements.txt
-            
-       - run:
-          name: Run Data analysis
+          command: |
+            pip install -r requirements.txt
+            pip install pytest
+      - run:
+          name: Run Data Analysis
           command: python data_analysis.py
-            
       - run:
           name: Run Pytest
-          command: ~/.local/bin/pytest 
+          command: ~/.local/bin/pytest
 
 workflows:
   version: 2
