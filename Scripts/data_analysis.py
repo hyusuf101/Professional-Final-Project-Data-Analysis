@@ -43,3 +43,38 @@ population_density = pd.DataFrame({
     ]
 })
 
+# Create a dictionary of London borough populations (2021 census data)
+population_data = {
+    'Barking and Dagenham': 212906,
+    'Barnet': 395869,
+    'Bexley': 247258,
+    'Brent': 339800,
+    'Bromley': 330795,
+    'Camden': 270029,
+    'City of London': 10938,
+    'Croydon': 386710,
+    'Ealing': 367100,
+    'Enfield': 333869,
+    'Greenwich': 286186,
+    'Hackney': 281120,
+    'Hammersmith and Fulham': 183544,
+    'Haringey': 266357,
+    'Harrow': 261348,
+    'Havering': 259552,
+    'Hillingdon': 309300,
+    'Hounslow': 288234,
+    'Islington': 245827,
+    'Kensington and Chelsea': 156864,
+    'Kingston upon Thames': 177507,
+    'Lambeth': 318000,
+    'Lewisham': 305309,
+    'Merton': 206186,
+    'Newham': 352005,
+    'Redbridge': 303858,
+    'Richmond upon Thames': 198019,
+    'Southwark': 318830,
+    'Sutton': 206349,
+    'Tower Hamlets': 319056,
+    'Waltham Forest': 276983,
+    'Wandsworth': 329677
+}
