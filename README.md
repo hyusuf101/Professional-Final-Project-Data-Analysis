@@ -1,6 +1,6 @@
 # London Borough Crime Analysis
 
-This project analyzes crime data in London boroughs, focusing on theft incidents and their relationship with population density and population size. The analysis uses Python libraries for data manipulation, statistical analysis, and visualization.
+This project analyses crime data in London boroughs, focusing on theft incidents and their relationship with population density and population size. The analysis uses Python libraries for data manipulation, statistical analysis, and visualisation.
 
 ## Project Overview
 
