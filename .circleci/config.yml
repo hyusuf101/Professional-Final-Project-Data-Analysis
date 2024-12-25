@@ -10,11 +10,10 @@ jobs:
           name: Install Dependencies
           command: |
             pip install -r requirements.txt
-            pip install pytest
       - run:
           name: Run Pytest
           command: |
-            ~/.local/bin/pytest tests/test_data_loading.py tests/test_data_cleaning.py tests/test_data_analysis.py
+            ~/.local/bin/pytest tests/
 
 workflows:
   version: 2
