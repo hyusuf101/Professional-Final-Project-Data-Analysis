@@ -13,10 +13,10 @@ jobs:
             pip install pytest
       - run:
           name: Run Data Analysis
-          command: python data_analysis.py
+          command: python scripts/data_analysis.py
       - run:
           name: Run Pytest
-          command: ~/.local/bin/pytest
+          command: pytest
 
 workflows:
   version: 2
