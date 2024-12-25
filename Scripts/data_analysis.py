@@ -80,6 +80,11 @@ population_data = {
     'Wandsworth': 329677
 }
 
+gdf_path = os.path.join(root_dir, 'statistical-gis-boundaries-london', 'ESRI', 'London_Borough_Excluding_MHW.shp')
+
+# Load the GeoDataFrame
+gdf = gpd.read_file(gdf_path)
+
 # Heatmap for Population Density by borough
 fig, ax3 = plt.subplots(1, 1, figsize=(5, 5))
 
@@ -99,4 +104,5 @@ ax3.set_title('Population Density by Borough', pad=20)
 # Print statistics
 print("Top 5 Boroughs by Population Density:")
 print(population_density.nlargest(5, 'Density')[['Borough', 'Density']])
+
 
