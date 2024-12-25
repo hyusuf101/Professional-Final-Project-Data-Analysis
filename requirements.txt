@@ -5,3 +5,4 @@ matplotlib
 seaborn
 scipy
 scikit-learn
+fiona==1.8.21
