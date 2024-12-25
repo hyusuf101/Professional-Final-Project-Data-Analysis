@@ -12,6 +12,11 @@ from scipy import stats
 
 from sklearn.linear_model import LinearRegression
 
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+
+
 import data_loading
 import data_cleaning
 import os #for directory filepath
@@ -21,13 +26,14 @@ import os #for directory filepath
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Construct the path to the data file
-data_path = os.path.join(root_dir, 'data', 'MPS Borough Level Crime (most recent 24 months).csv')
+data_path = os.path.join(root_dir, '..', 'data', 'MPS Borough Level Crime (most recent 24 months).csv')
+
 
 # Load data
 crime = data_loading.load_data(data_path)
 
 # Clean data
-clean_data = data_cleaning.clean_data(crime)
+crime = data_cleaning.clean_data(crime)
 
 #Added population density values from GOV census
 population_density = pd.DataFrame({
@@ -83,10 +89,11 @@ population_data = {
     'Wandsworth': 329677
 }
 
-gdf_path = os.path.join(root_dir, 'statistical-gis-boundaries-london', 'ESRI', 'London_Borough_Excluding_MHW.shp')
+gdf_path = os.path.join(root_dir,'..', 'statistical-gis-boundaries-london', 'ESRI', 'London_Borough_Excluding_MHW.shp')
 
 # Load the GeoDataFrame
 gdf = gpd.read_file(gdf_path)
+gdf['Borough'] = gdf['NAME']
 
 # Heatmap for Population Density by borough
 fig, ax3 = plt.subplots(1, 1, figsize=(5, 5))
@@ -108,6 +115,8 @@ ax3.set_title('Population Density by Borough', pad=20)
 print("Top 5 Boroughs by Population Density:")
 print(population_density.nlargest(5, 'Density')[['Borough', 'Density']])
 
+print("Crime DataFrame columns:", crime.columns)
+
 # Filter the dataset for theft-related crimes and aggregate by borough
 theft_data = crime[crime['Crime Category'] == 'THEFT'].groupby('Borough')[crime.columns[-1]].sum().reset_index()
 theft_data.columns = ['Borough', 'TheftCount']
@@ -123,7 +132,6 @@ theft_plot = london_theft.plot(column='TheftCount',
                                legend_kwds={'label': 'Number of Theft Incidents'},
                                cmap='YlOrRd',
                                missing_kwds={'color': 'lightgrey'})
-# ctx.add_basemap(ax4, source=ctx.providers.CartoDB.Positron, crs=gdf.crs.to_string(), alpha=0.5, verify=False)
 ax4.set_axis_off()
 ax4.set_title('Theft Occurrences by Borough', pad=20)
 
@@ -231,3 +239,6 @@ predictions = model.predict(X)
 
 # Print predictions
 print("Predictions:", predictions.flatten())
+
+
+

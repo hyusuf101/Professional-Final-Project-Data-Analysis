@@ -13,7 +13,10 @@ def clean_data(df):
         except ValueError:
             # If the conversion fails, print a message and skip renaming
             print(f"Column {col} is not in the expected date format and will not be renamed.")
-    
+
+    if 'BoroughName' in df.columns:
+        df.rename(columns={'BoroughName': 'Borough'}, inplace=True)
+
     # Drop rows with missing values
     df = df.dropna()  
     
