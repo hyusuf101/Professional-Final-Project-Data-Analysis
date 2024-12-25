@@ -8,8 +8,8 @@ from scipy import stats
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LinearRegression
 
-import data loading
-import data cleaning
+import data_loading
+import data_cleaning
 import os #for directory filepath
 
 
@@ -20,7 +20,8 @@ root_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(root_dir, 'data', 'MPS Borough Level Crime (most recent 24 months).csv')
 
 # Load data
-crime = loading.load_data(data_path)
+crime = data_loading.load_data(data_path)
 
-
+# Clean data
+clean_data = data_cleaning.clean_data(crime)
 
