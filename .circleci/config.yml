@@ -8,14 +8,10 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: |
-            python -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
+          command: pip install -r requirements.txt
       - run:
           name: Run Tests
           command: |
-            . venv/bin/activate
             python -m unittest discover -s data/tests -p "test_*.py"
 
 workflows:
