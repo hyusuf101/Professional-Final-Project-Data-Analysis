@@ -3,7 +3,11 @@ import numpy as np
 import geopandas as gpd
 
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from matplotlib.colors import Normalize
+
 import seaborn as sns
+
 from scipy import stats
 
 from sklearn.linear_model import LinearRegression
@@ -165,3 +169,39 @@ plt.show()
 # Print p-value and correlation coefficient separately
 print(f"Correlation coefficient: {correlation:.2f}")
 print(f"p-value: {p_value:.4f}")
+
+# Convert population data to DataFrame
+population_df = pd.DataFrame(list(population_data.items()), columns=['Borough', 'Population'])
+
+# Merge population data with existing analysis_gdf
+analysis_gdf = gdf.merge(theft_data, on='Borough', how='left')
+analysis_gdf = analysis_gdf.merge(population_df, on='Borough', how='left')
+
+# Calculate theft per capita
+analysis_gdf['TheftPerCapita'] = (analysis_gdf['TheftCount'] / analysis_gdf['Population']) * 1000  # per 1000 residents
+top_10_per_capita = analysis_gdf.nlargest(10, 'TheftPerCapita')
+
+# Create the horizontal bar chart
+plt.figure(figsize=(12, 8))
+bars = plt.barh(top_10_per_capita['Borough'], top_10_per_capita['TheftPerCapita'])
+plt.title('Top 10 Boroughs - Theft Incidents per 1,000 Residents')
+plt.xlabel('Theft Incidents per 1,000 Residents')
+plt.ylabel('Borough')
+
+# Add value labels on the bars
+for i, bar in enumerate(bars):
+    width = bar.get_width()
+    plt.text(width, bar.get_y() + bar.get_height()/2, 
+             f'{width:.1f}', 
+             ha='left', va='center', fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+
+# Print statistics
+print("Correlation between Population and Theft Incidents:")
+print(analysis_gdf['Population'].corr(analysis_gdf['TheftCount']))
+
+print("Top 5 Boroughs by Theft per 1,000 Residents:")
+print(top_10_per_capita[['Borough', 'TheftPerCapita']].head().to_string())
+
