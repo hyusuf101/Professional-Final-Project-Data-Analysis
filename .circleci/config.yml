@@ -8,11 +8,14 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: pip install -r requirements.txt
-      - run:
-          name: Run Tests
           command: |
-            pytest tests/test_data_loading.py tests/test_data_cleaning.py tests/test_data_analysis.py
+            pip install -r requirements.txt
+            pip install pytest
+      - run:
+          name: Run Pytest
+          command: |
+            ~/.local/bin/pytest tests/test_data_loading.py tests/test_data_cleaning.py tests/test_data_analysis.py
+
 workflows:
   version: 2
   test:
