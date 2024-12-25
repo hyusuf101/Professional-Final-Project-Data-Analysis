@@ -33,13 +33,16 @@ pip install pandas numpy geopandas matplotlib seaborn scipy scikit-learn
 1. Clone the repository to your local machine:
 ```sh
     git clone https://github.com/github_username/Professional-Final-Project-Data-Analysis.git
+```
 
+2. Change to directory
+```sh
     cd Professional-Final-Project-Data-Analysis
 ```
  
-2. Run analysis 
+3. Run analysis 
 ```sh
-    python analyze_crime_data.py
+    python data_analysis.py
  ```
 
 This script will:
