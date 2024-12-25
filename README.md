@@ -37,7 +37,7 @@ pip install pandas numpy geopandas matplotlib seaborn scipy scikit-learn
 
 2. Change to directory
 ```sh
-    cd Professional-Final-Project-Data-Analysis
+    cd Professional-Final-Project-Data-Analysis/data
 ```
  
 3. Run analysis 
