@@ -128,3 +128,40 @@ ax4.set_title('Theft Occurrences by Borough', pad=20)
 # Print statistics
 print("Top 5 Boroughs by Theft Occurrences:")
 print(theft_data.nlargest(5, 'TheftCount')[['Borough', 'TheftCount']])
+
+
+# Merge density and theft data correctly
+analysis_df = pd.merge(population_density, theft_data, on='Borough', how='inner')
+
+# Exclude Westminster from the analysis
+analysis_df = analysis_df[analysis_df['Borough'] != 'Westminster']
+
+# Calculate correlation coefficient and p-value
+correlation, p_value = stats.pearsonr(analysis_df['Density'], analysis_df['TheftCount'])
+
+# Create scatter plot with regression line
+plt.figure(figsize=(12, 8))
+sns.regplot(data=analysis_df, x='Density', y='TheftCount', scatter_kws={'alpha': 0.5}, line_kws={'color': 'red'})
+
+# Add borough labels for top theft locations
+for idx, row in analysis_df.nlargest(5, 'TheftCount').iterrows():
+    plt.annotate(row['Borough'], 
+                (row['Density'], row['TheftCount']),
+                xytext=(5, 5), textcoords='offset points',
+                fontsize=9)
+
+# Add correlation information to plot
+plt.title('Correlation between Population Density and Theft Incidents')
+plt.xlabel('Population Density (people per sq km)')
+plt.ylabel('Number of Theft Incidents')
+plt.text(0.05, 0.95, f'Correlation coefficient: {correlation:.2f}\n\
+p-value: {p_value:.4f}', 
+         transform=plt.gca().transAxes, 
+         bbox=dict(facecolor='white', alpha=0.8))
+
+plt.tight_layout()
+plt.show()
+
+# Print p-value and correlation coefficient separately
+print(f"Correlation coefficient: {correlation:.2f}")
+print(f"p-value: {p_value:.4f}")
