@@ -11,7 +11,6 @@ import seaborn as sns
 from scipy import stats
 
 from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LinearRegression
 
 import data_loading
 import data_cleaning
@@ -205,3 +204,30 @@ print(analysis_gdf['Population'].corr(analysis_gdf['TheftCount']))
 print("Top 5 Boroughs by Theft per 1,000 Residents:")
 print(top_10_per_capita[['Borough', 'TheftPerCapita']].head().to_string())
 
+# Merge density and theft data correctly
+analysis_df = pd.merge(population_density, theft_data, on='Borough', how='inner')
+analysis_df = pd.merge(analysis_df, population_df, on='Borough', how='inner')
+
+# Exclude Westminster from the analysis
+analysis_df = analysis_df[analysis_df['Borough'] != "Westminster"]
+
+# Perform linear regression analysis using scikit-learn
+X = analysis_df[['Density']].values.reshape(-1, 1)
+y = analysis_df['TheftCount'].values.reshape(-1, 1)
+
+model = LinearRegression()
+model.fit(X, y)
+
+# Get the model coefficients
+coefficient = model.coef_[0][0]
+intercept = model.intercept_[0]
+
+# Print the model summary
+print(f"Coefficient: {coefficient}")
+print(f"Intercept: {intercept}")
+
+# Make predictions using the model
+predictions = model.predict(X)
+
+# Print predictions
+print("Predictions:", predictions.flatten())
