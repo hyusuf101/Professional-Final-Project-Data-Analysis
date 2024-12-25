@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import geopandas as gpd
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -78,3 +79,24 @@ population_data = {
     'Waltham Forest': 276983,
     'Wandsworth': 329677
 }
+
+# Heatmap for Population Density by borough
+fig, ax3 = plt.subplots(1, 1, figsize=(5, 5))
+
+# Plot: Population Density
+london_density = gdf.merge(population_density, on='Borough', how='left')
+density_plot = london_density.plot(column='Density', 
+                                   ax=ax3,
+                                   legend=True,
+                                   legend_kwds={'label': 'Population Density (people per sq km)'},
+                                   cmap='YlOrRd',
+                                   missing_kwds={'color': 'lightgrey'})
+ax3.set_axis_off()
+ax3.set_title('Population Density by Borough', pad=20)
+
+
+
+# Print statistics
+print("Top 5 Boroughs by Population Density:")
+print(population_density.nlargest(5, 'Density')[['Borough', 'Density']])
+
