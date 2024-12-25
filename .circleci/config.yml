@@ -12,8 +12,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            python -m unittest discover -s data/tests -p "test_*.py"
-
+            pytest tests/test_data_loading.py tests/test_data_cleaning.py tests/test_data_analysis.py
 workflows:
   version: 2
   test:
